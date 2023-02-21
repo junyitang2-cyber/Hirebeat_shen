@@ -18,6 +18,19 @@ const Header = () => {
           <AddIcon />
         </Fab>
       </Grid>
+      <Grid container xs={12}>
+        <Box sx={{ width: '100%' }}>
+          <Tabs
+            textColor="secondary"
+            indicatorColor="secondary"
+            aria-label="secondary tabs example"
+          >
+            <Tab value="one" label="Talent Pool" to="./Home" />
+            <Tab value="two" label="Candidates" />
+            <Tab value="three" label="Detail" />
+          </Tabs>
+        </Box>
+      </Grid>
     </Grid>
   )
 }

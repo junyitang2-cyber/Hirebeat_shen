@@ -1,8 +1,12 @@
 import React from 'react'
-import { Box, Button, Card, Grid, Paper, TableCell, TableRow } from '@mui/material'
+import { Box, Button, Card, Grid, Paper, TableCell, TableRow, styled, Table, TableHead, Typography, IconButton, Tooltip } from '@mui/material'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { setUseProxies } from 'immer'
+import EditIcon from '@mui/icons-material/Edit';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 
 const Candidates = () => {
@@ -17,52 +21,85 @@ const Candidates = () => {
       setCandidates(response.data.Items)
 
     }
-    getData(),
-      loadUserDetails()
+    getData()
   }, [])
 
   const editUser = async (id, user) => {
     return await axios.update(API_URL, user)
   }
 
-  const loadUserDetails = async () => {
-    const response = await getUser(id)
-    setUseProxies(response.data)
-  }
 
   const handleUpdate = async () => {
-    const response = await editUser(user)
+    const response = await editUser()
   }
 
   const deleteUser = async (id) => {
-    return await axios.delete(API_URL)
+    try {
+      return await axios.delete(`${API_URL}`, id)
+    } catch (error) {
+      console.log("error while calling deleteUser api", error)
+    }
+
   }
 
   const handleDelete = async () => {
-    await deleteUser(user)
+    await deleteUser(id)
   }
+
+  const StyledTable = styled(Table)`
+width:90%;margin:50px 0 0 50px`
 
   return (
     <Box sx={{ height: "100%" }}>
-      <Card sx={{ height: "100%" }}>
 
+      <Card scrollSnapType='y' overflowX='scroll' scrollSnapAlign='start' sx={{ height: "100%" }}>
+        <Grid container xs={12} sx={{ p: 4 }}>
+          <Grid item xs={12}>
+            {candidates.map(user => (
+              <Card key='index' sx={{ m: 4, height: 100 }}>
+                <Typography sx={{ m: 4, mt: 4, mb: 1 }} variant='h5'>{user.currentTitle}</Typography>
+                <Grid container xs={12} sx={{ m: 4, mt: 2, mb: 4 }} direction="row" justifyContent='center' alignItems='center'>
+                  <Grid item xs={2}>
+                    date
+                  </Grid>
+                  <Grid item xs={2}>
+                    ShortList
+                  </Grid>
+                  <Grid item xs={5}>
+                    Candidates:{user.locationPreference}
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Tooltip title="Edit">
+                      <IconButton onClick={() => handleUpdate()}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Mark">
+                      <IconButton>
+                        <BookmarkIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="More">
+                      <IconButton>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="More">
+                      <IconButton onClick={() => handleDelete(user.id)}>
+                        <ClearIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                </Grid>
+              </Card>
+            ))}
+            <Grid item xs={12}>
+            </Grid>
+          </Grid>
+        </Grid>
 
-        {candidates.map(user => (
-
-          <TableRow key={user.id}>
-            <TableCell>{user.id}</TableCell>
-            <TableCell>{user.currentTitle}</TableCell>
-            <TableCell>{user.locationPreference}</TableCell>
-            <TableCell>{user.yearOfExperience}</TableCell>
-            <TableCell>{user.seniorityLevel}</TableCell>
-          </TableRow>
-
-
-        ))}
-
-        <Button onClick={() => handleUpdate()}>Edit</Button>
-        <Button>delete</Button>
       </Card>
+      <TableHead></TableHead>
     </Box>
   )
 }

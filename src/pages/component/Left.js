@@ -22,10 +22,10 @@ const Left = () => {
       <Divider />
 
       <Grid item xs={12} container >
-        <Grid item xs={7} md={2} sx={{ ml: 4, mt: 1 }}>
+        <Grid item xs={7} md={7} sx={{ ml: 4, mt: 1 }}>
           <Icon sx={{ fontSize: 40 }} icon="ri:align-left" />
         </Grid>
-        <Button xs={2} variant='contained'>search</Button>
+        <Button xs={2} sx={{ alignItems: 'flex-end' }} variant='contained'>search</Button>
       </Grid>
 
       <Divider />

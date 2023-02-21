@@ -4,6 +4,7 @@ import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import uuid from 'react-uuid';
 
 
 const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
@@ -11,11 +12,13 @@ const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
 
 const Form = () => {
   const [user, setUser] = useState("")
+  const [error, setError] = useState('')
+  const id = new Date().getTime();
   const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
-  const { id } = useParams()
+
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value })
+    setUser({ ...user, id: id, [e.target.name]: e.target.value })
     console.log(e.target.value)
   }
 
@@ -24,7 +27,12 @@ const Form = () => {
   }
 
   const handleAdd = async () => {
-    await addUser(user)
+    if (!currentTitle || !locationPreference || !yearsOfExperience || !seniorityLevel || !requiredSkillSets || !industry) {
+      setError("please input all input Filed!")
+    } else {
+      await addUser(user)
+      setError("")
+    }
   }
 
 
@@ -181,9 +189,7 @@ const Form = () => {
           <Grid item xs={12} sx={{ m: 4, ml: 10 }}>
             <Typography>Additional Comment (eg.language skills,certificates,major, etc.)</Typography>
             <Grid item xs={12} >
-              <TextField fullWidth multiline rows={7}>
-                HELLO
-              </TextField>
+              <TextField fullWidth multiline rows={7}></TextField>
             </Grid>
 
           </Grid>
@@ -191,6 +197,7 @@ const Form = () => {
 
 
         </Grid>
+        {error && <h3>{error}</h3>}
         <Button onClick={() => handleAdd()}>Submit</Button>
       </Grid>
     </Card >

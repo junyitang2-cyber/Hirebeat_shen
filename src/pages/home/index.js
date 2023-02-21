@@ -1,5 +1,6 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
+import { Link } from 'react-router-dom'
 import Candidates from '../component/Candidates'
 
 
