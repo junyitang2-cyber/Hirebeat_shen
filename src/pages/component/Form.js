@@ -3,26 +3,31 @@ import React from 'react'
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 
 const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
 
 
 const Form = () => {
-  const [years, setYears] = React.useState('');
   const [user, setUser] = useState("")
-  const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel } = user;
+  const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
+  const { id } = useParams()
 
-  const handleChange = (event) => {
-    const value = event.target.value
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+    console.log(e.target.value)
   }
 
   const addUser = async (e) => {
-    return await axios.post(API_URL, e)
+    await axios.post(`${API_URL}`, e)
   }
 
   const handleAdd = async () => {
     await addUser(user)
   }
+
+
 
   return (
     <Card sx={{ height: 1000 }}>
@@ -38,7 +43,14 @@ const Form = () => {
 
         <Grid container xs={12} sx={{ m: 2 }}>
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
-            <TextField required label="Current Title" variant="standard" value={currentTitle} fullWidth />
+            <TextField
+              required
+              label="Current Title"
+              variant="standard"
+              value={currentTitle}
+              fullWidth
+              name="currentTitle"
+              onChange={(e) => handleChange(e)} />
           </Grid>
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
             <TextField
@@ -46,6 +58,8 @@ const Form = () => {
               label="Location Preference"
               variant="standard"
               value={locationPreference}
+              name="locationPreference"
+              onChange={(e) => handleChange(e)}
               fullWidth
             />
           </Grid>
@@ -58,6 +72,9 @@ const Form = () => {
               required
               defaultValue={""}
               fullWidth
+              name="yearsOfExperience"
+              value={yearsOfExperience}
+              onChange={(e) => handleChange(e)}
             >
               <option value={""}>Select...</option>
               <option value={"Less than 1 year"}>Less than 1 year</option>
@@ -73,8 +90,10 @@ const Form = () => {
               required
               defaultValue={""}
               fullWidth
+              value={seniorityLevel}
+              name="seniorityLevel"
+              onChange={(e) => handleChange(e)}
               inputProps={{
-                name: 'age',
                 id: 'uncontrolled-native'
               }}
             >
@@ -93,6 +112,9 @@ const Form = () => {
             <NativeSelect
               defaultValue={""}
               fullWidth
+              value={requiredSkillSets}
+              name="requiredSkillSets"
+              onChange={(e) => handleChange(e)}
             >
               <option value={""}>Select...</option>
               <option value={"Leadership"}>Leadership</option>
@@ -107,8 +129,9 @@ const Form = () => {
             <NativeSelect
               defaultValue={""}
               fullWidth
+              onChange={(e) => handleChange(e)}
               inputProps={{
-                name: 'age',
+                name: 'perferredSkilledSets',
                 id: 'uncontrolled-native'
               }}
             >
@@ -126,6 +149,9 @@ const Form = () => {
             <NativeSelect
               defaultValue={""}
               fullWidth
+              value={industry}
+              name="industry"
+              onChange={(e) => handleChange(e)}
             >
               <option value={""}>Select...</option>
               <option value={"Less than 1 year"}>Less than 1 year</option>
@@ -141,7 +167,7 @@ const Form = () => {
               defaultValue={""}
               fullWidth
               inputProps={{
-                name: 'age',
+                name: 'educationLevel',
                 id: 'uncontrolled-native'
               }}
             >
