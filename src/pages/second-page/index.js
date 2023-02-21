@@ -15,7 +15,7 @@ const SecondPage = () => {
       <Grid item xs={3}>
         <Left />
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={9} >
         <Form />
       </Grid>
 

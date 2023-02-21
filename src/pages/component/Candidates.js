@@ -20,14 +20,16 @@ const Candidates = () => {
   return (
     <Box sx={{ height: 600 }}>
       <Card sx={{ height: 300 }}>
-        hello
+
 
         {candidates.map(user => (
 
           <TableRow key={user.id}>
-            <TableCell>
-              {user.id}
-            </TableCell>
+            <TableCell>{user.id}</TableCell>
+            <TableCell>{user.currentTitle}</TableCell>
+            <TableCell>{user.locationPreference}</TableCell>
+            <TableCell>{user.yearOfExperience}</TableCell>
+            <TableCell>{user.seniorityLevel}</TableCell>
           </TableRow>
 
 
