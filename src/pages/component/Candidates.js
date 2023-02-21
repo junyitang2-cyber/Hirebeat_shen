@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, Grid, Paper, TableCell, TableRow } from '@mui/material'
+import { Box, Button, Card, Grid, Paper, TableCell, TableRow } from '@mui/material'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -18,8 +18,8 @@ const Candidates = () => {
   }, [])
 
   return (
-    <Box sx={{ height: 600 }}>
-      <Card sx={{ height: 300 }}>
+    <Box sx={{ height: "100%" }}>
+      <Card sx={{ height: "100%" }}>
 
 
         {candidates.map(user => (
@@ -34,6 +34,9 @@ const Candidates = () => {
 
 
         ))}
+
+        <Button>Edit</Button>
+        <Button>delete</Button>
       </Card>
     </Box>
   )
