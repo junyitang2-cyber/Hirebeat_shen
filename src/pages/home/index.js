@@ -11,11 +11,11 @@ const Home = () => {
     <Grid container spacing={6}>
       <Header />
 
-      <Grid item xs={5}>
+      <Grid item xs={3}>
         <Left />
       </Grid>
 
-      <Grid item xs={7}>
+      <Grid item xs={9}>
         <Candidates />
       </Grid>
 

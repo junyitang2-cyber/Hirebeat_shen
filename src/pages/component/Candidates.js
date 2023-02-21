@@ -11,24 +11,28 @@ const Candidates = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(API_URL)
-      setCandidates(JSON.parse(response.data.body).Items)
+      setCandidates(response.data.Items)
 
     }
-    getData()
+    getData();
   }, [])
 
   return (
     <Box sx={{ height: 600 }}>
-      {candidates.map(user => (
-        <Card key={user.id}>
-          <TableRow >
+      <Card sx={{ height: 300 }}>
+        hello
+
+        {candidates.map(user => (
+
+          <TableRow key={user.id}>
             <TableCell>
               {user.id}
             </TableCell>
           </TableRow>
-        </Card>
-      ))}
 
+
+        ))}
+      </Card>
     </Box>
   )
 }
