@@ -17,14 +17,12 @@ const Form = () => {
   };
 
   const addUser = async (e) => {
-    return await axios.put(API_URL, e.target)
+    return await axios.post(API_URL, e)
   }
 
   const handleAdd = async () => {
     await addUser(user)
   }
-
-
 
   return (
 
@@ -57,44 +55,6 @@ const Form = () => {
               fullWidth
             />
           </Grid>
-          {/* <Grid item xs={5} sx={{ m: 4, ml: 10 }}>
-            <InputLabel required>Years of Experience</InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              value={years}
-              label="Years of Experience"
-              onChange={handleChange}
-              fullWidth
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-
-          </Grid>
-          <Grid item xs={5} sx={{ m: 4, ml: 10 }}>
-            <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              value={years}
-              label="Years of Experience"
-              onChange={handleChange}
-              fullWidth
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </Grid> */}
-
         </Grid>
         <Button onClick={() => handleAdd()}>Submit</Button>
 
