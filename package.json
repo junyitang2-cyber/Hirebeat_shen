@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "export": "next export",
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
@@ -67,6 +67,7 @@
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "1.15.0",
     "react-dropzone": "14.2.3",
+    "react-file-base64": "^1.0.3",
     "react-hook-form": "7.38.0",
     "react-hot-toast": "2.4.0",
     "react-i18next": "12.0.0",

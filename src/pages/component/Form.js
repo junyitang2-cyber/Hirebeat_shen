@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { useRouter } from 'next/router';
 
 
 const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
@@ -15,7 +16,7 @@ const Form = () => {
   const [error, setError] = useState('')
   const id = new Date().getTime();
   const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
-
+  const router = useRouter()
 
   const handleChange = (e) => {
     setUser({ ...user, id: id, [e.target.name]: e.target.value })
@@ -31,6 +32,7 @@ const Form = () => {
       setError("please input all input Filed!")
     } else {
       await addUser(user)
+      router.push('/home')
       setError("")
     }
   }
@@ -200,7 +202,7 @@ const Form = () => {
         {error && <h3>{error}</h3>}
         <Button onClick={() => handleAdd()}>Submit</Button>
       </Grid>
-    </Card >
+    </Card>
 
 
 

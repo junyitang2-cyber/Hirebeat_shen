@@ -10,63 +10,66 @@ import EmailIcon from '@mui/icons-material/Email';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import { Link, Route, Router, Routes } from 'react-router-dom'
 
 const Left = () => {
   return (
-    <Card sx={{ height: 600 }}>
+    <div>
+      <Card sx={{ height: 600 }}>
+        <CardContent sx={{ mt: 4, alignItems: 'center', justifyItems: 'center' }}>
+          <TextField fullWidth >hello</TextField>
+        </CardContent>
 
-      <CardContent sx={{ mt: 4, alignItems: 'center', justifyItems: 'center' }}>
-        <TextField fullWidth >hello</TextField>
-      </CardContent>
+        <Divider />
 
-      <Divider />
-
-      <Grid item xs={12} container >
-        <Grid item xs={7} md={7} sx={{ ml: 4, mt: 1 }}>
-          <Icon sx={{ fontSize: 40 }} icon="ri:align-left" />
+        <Grid item xs={12} container >
+          <Grid item xs={7} md={7} sx={{ ml: 4, mt: 1 }}>
+            <Icon sx={{ fontSize: 40 }} icon="ri:align-left" />
+          </Grid>
+          <Button xs={2} sx={{ alignItems: 'flex-end' }} variant='contained'>search</Button>
         </Grid>
-        <Button xs={2} sx={{ alignItems: 'flex-end' }} variant='contained'>search</Button>
-      </Grid>
 
-      <Divider />
+        <Divider />
 
-      <List sx={{ p: 3 }}>
-        <ListItemButton>
-          <ListItemIcon>
-            <AddToPhotosIcon />
-          </ListItemIcon>
-          <ListItemText primary="New Order" />
-        </ListItemButton>
-      </List>
-      <Divider />
+        <List sx={{ p: 3 }}>
 
-      <List sx={{ p: 3 }}>
-        <ListItemButton>
-          <ListItemIcon>
-            <EmailIcon />
-          </ListItemIcon>
-          <ListItemText primary="Active" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Archied" />
-        </ListItemButton>
-      </List>
-      <Divider />
+          <ListItemButton>
+            <ListItemIcon>
+              <AddToPhotosIcon />
+            </ListItemIcon>
+            <ListItemText primary="New Order" />
+          </ListItemButton>
+        </List>
+        <Divider />
 
-      <List sx={{ p: 3 }}>
-        <ListItemButton>
-          <ListItemIcon>
-            <BookmarkAddIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reorder" />
-        </ListItemButton>
-      </List>
-      <Divider />
+        <List sx={{ p: 3 }}>
+          <ListItemButton>
+            <ListItemIcon>
+              <EmailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Active" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <DraftsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Archied" />
+          </ListItemButton>
+        </List>
+        <Divider />
 
-    </Card>
+        <List sx={{ p: 3 }}>
+          <ListItemButton>
+            <ListItemIcon>
+              <BookmarkAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reorder" />
+          </ListItemButton>
+        </List>
+
+        <Divider />
+      </Card >
+    </div >
   )
 }
 

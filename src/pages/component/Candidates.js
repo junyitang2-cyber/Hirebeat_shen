@@ -1,103 +1,68 @@
+import { Avatar, Card, Grid, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@mui/material'
 import React from 'react'
-import { Box, Button, Card, Grid, Paper, TableCell, TableRow, styled, Table, TableHead, Typography, IconButton, Tooltip } from '@mui/material'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import EditIcon from '@mui/icons-material/Edit';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ClearIcon from '@mui/icons-material/Clear';
-
-
 
 const Candidates = () => {
-  const [candidates, setCandidates] = useState([])
-  const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
-  const [user, setUser] = useState("")
-  const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await axios.get(API_URL)
-      setCandidates(response.data.Items)
-
-    }
-    getData()
-  }, [])
-
-  const editUser = async (id, user) => {
-    return await axios.update(API_URL, user)
-  }
-
-
-  const handleUpdate = async () => {
-    const response = await editUser()
-  }
-
-  const handleDelete = async (event, id) => {
-    try {
-      return await axios.delete(`${API_URL}/${id}`)
-    } catch (error) {
-      console.log("error while calling deleteUser api", error)
-    }
-
-  }
-
-
-  const StyledTable = styled(Table)`
-width:90%;margin:50px 0 0 50px`
-
   return (
-    <Box sx={{ height: "100%" }}>
+    <div>
+      <Grid container xs={12} sx={{ mt: 5, mb: 5 }}>
+        <Grid item xs={5}>
+          Candidates
+        </Grid>
+        <Grid item xs={2}>
+          Company
+        </Grid>
+        <Grid item xs={2}>
+          Score
+        </Grid>
+        <Grid item xs={1.5}>
+          Source
+        </Grid>
+        <Grid item xs={1.5}>
+          Mark
+        </Grid>
+      </Grid>
 
-      <Card scrollSnapType='y' overflowX='scroll' scrollSnapAlign='start' sx={{ height: "100%" }}>
-        <Grid container xs={12} sx={{ p: 4 }}>
-          <Grid item xs={12}>
-            {candidates.map(user => (
-              <Card key='index' sx={{ m: 4, height: 100 }}>
-                <Typography sx={{ m: 4, mt: 4, mb: 1 }} variant='h5'>{user.currentTitle}</Typography>
-                <Grid container xs={12} sx={{ m: 4, mt: 2, mb: 4 }} direction="row" justifyContent='center' alignItems='center'>
-                  <Grid item xs={2}>
-                    date
-                  </Grid>
-                  <Grid item xs={2}>
-                    ShortList
-                  </Grid>
-                  <Grid item xs={5}>
-                    Candidates:{user.locationPreference}
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Tooltip title="Edit">
-                      <IconButton onClick={() => handleUpdate()}>
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Mark">
-                      <IconButton>
-                        <BookmarkIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="More">
-                      <IconButton>
-                        <MoreVertIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="More">
-                      <IconButton onClick={() => handleDelete(user.id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                </Grid>
-              </Card>
-            ))}
-            <Grid item xs={12}>
+      <Paper>
+        <Card>
+          <Grid container xs={12} direction='row' justifyContent='space-around' alignItems='center'>
+            <Grid item xs={5}>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary='user.name'
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        user.currentTitle
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            </Grid>
+            <Grid item xs={2} sx={{ alignItems: 'center', justifyItems: 'center' }}>
+              Company
+            </Grid>
+            <Grid item xs={2} sx={{ alignItems: 'center', justifyItems: 'center' }}>
+              Score
+            </Grid>
+            <Grid item xs={1.5} sx={{ alignItems: 'center', justifyItems: 'center' }}>
+              Source
+            </Grid>
+            <Grid item xs={1.5} sx={{ alignItems: 'center', justifyItems: 'center' }}>
+              Mark
             </Grid>
           </Grid>
-        </Grid>
-
-      </Card>
-      <TableHead></TableHead>
-    </Box>
+        </Card>
+      </Paper>
+    </div>
   )
 }
 

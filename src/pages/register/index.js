@@ -42,7 +42,6 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
-import { Auth } from "aws-amplify"
 
 const defaultValues = {
   email: '',

@@ -1,11 +1,21 @@
-import { Box, Button, Divider, Fab, Grid, Paper, Stack, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Breadcrumbs, Button, Divider, Fab, Grid, Paper, styled, Stack, Tab, Tabs, Typography, emphasize, ButtonGroup } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import AddIcon from '@mui/icons-material/Add';
 import React from 'react'
-
-
+import HomeIcon from '@mui/icons-material/Home';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Chip from '@mui/material/Chip';
+import { withRouter } from 'next/router';
+import { Link, Router, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter()
+
+  function clickTalent() {
+    router.push('/TalentPool')
+  }
+
   return (
     <Grid item xs={12} container>
       <Grid item xs={4}>
@@ -19,20 +29,16 @@ const Header = () => {
         </Fab>
       </Grid>
       <Grid container xs={12}>
-        <Box sx={{ width: '100%' }}>
-          <Tabs
-            textColor="secondary"
-            indicatorColor="secondary"
-            aria-label="secondary tabs example"
-          >
-            <Tab value="one" label="Talent Pool" to="./Home" />
-            <Tab value="two" label="Candidates" />
-            <Tab value="three" label="Detail" />
-          </Tabs>
-        </Box>
+        <ButtonGroup variant="text" aria-label="text button group">
+          <Button onClick={() => clickTalent()}>Talent Pool</Button>
+          <Button onClick={() => { }}>Candidates</Button>
+          <Button onClick={() => { }}>Details</Button>
+        </ButtonGroup>
       </Grid>
     </Grid>
+
   )
 }
 
-export default Header
+
+export default withRouter(Header);

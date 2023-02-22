@@ -11,7 +11,18 @@ const navigation = () => {
       icon: 'mdi:email-outline',
     },
     {
-      path: '/acl',
+      title: 'Third Page',
+      path: '/third-page',
+      icon: 'mdi:email-outline',
+      children: [
+        {
+          title: 'UserProfile',
+          path: 'third-page/user'
+        }
+      ]
+    },
+    {
+      path: '/component/TalentPool',
       action: 'read',
       subject: 'acl-page',
       title: 'Access Control',
