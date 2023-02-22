@@ -42,6 +42,8 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
+import { Auth } from "aws-amplify"
+
 const defaultValues = {
   email: '',
   username: '',
@@ -149,6 +151,9 @@ const Register = () => {
     })
   }
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
+
+  //AWS Cognito integration here
+
 
   return (
     <Box className='content-right'>

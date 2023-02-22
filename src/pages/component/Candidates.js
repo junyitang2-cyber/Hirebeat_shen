@@ -33,18 +33,15 @@ const Candidates = () => {
     const response = await editUser()
   }
 
-  const deleteUser = async (id) => {
+  const handleDelete = async (event, id) => {
     try {
-      return await axios.delete(`${API_URL}`, id)
+      return await axios.delete(`${API_URL}/${id}`)
     } catch (error) {
       console.log("error while calling deleteUser api", error)
     }
 
   }
 
-  const handleDelete = async () => {
-    await deleteUser(id)
-  }
 
   const StyledTable = styled(Table)`
 width:90%;margin:50px 0 0 50px`
