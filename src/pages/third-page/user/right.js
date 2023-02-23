@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 
 const PostDetails = () => {
   const [candidates, setCandidates] = useState([])
-  const API_URL = 'https://ancc52vql6.execute-api.us-west-2.amazonaws.com/dev';
+  const API__URL = 'https://ancc52vql6.execute-api.us-west-2.amazonaws.com/dev';
   const [user, setUser] = useState("")
   const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
   const router = useRouter()
@@ -23,7 +23,7 @@ const PostDetails = () => {
   }, [])
 
   const getData = async () => {
-    const response = await axios.get(`${API_URL}`)
+    const response = await axios.get(`${API__URL}`)
     console.log(response)
     setCandidates(response.data.Items)
 
@@ -48,6 +48,8 @@ const PostDetails = () => {
   };
 
 
+
+
   const StyledTable = styled(Table)`
 width:90%;margin:50px 0 0 50px`
 
@@ -59,7 +61,7 @@ width:90%;margin:50px 0 0 50px`
         <Grid item xs={12}>
           {candidates.map(user => (
             <Card key='index' sx={{ m: 4, height: 100 }}>
-              <Typography sx={{ m: 4, mt: 4, mb: 1 }} variant='h5'>{user.creator}</Typography>
+              <Typography sx={{ m: 4, mt: 4, mb: 1 }} variant='h5'>{user.id}</Typography>
               <Grid container xs={12} sx={{ m: 4, mt: 2, mb: 4 }} direction="row" justifyContent='center' alignItems='center'>
                 <Grid item xs={2}>
                   date

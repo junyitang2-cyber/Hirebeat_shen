@@ -3,17 +3,23 @@ import { Box, Button, FormControl, Grid, Paper, TextField, Typography } from '@m
 import React from 'react'
 import { useState } from 'react'
 import FileBase from 'react-file-base64'
+import axios from 'axios'
 
 import PostDetails from './right'
 
 const UserProfile = () => {
+  const API__URL = 'https://ancc52vql6.execute-api.us-west-2.amazonaws.com/dev';
 
   const [postData, setPostData] = useState({
     creator: '', title: '', message: '', tags: '', selectedFile: ''
   })
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async (e) => {
+    try {
+      await axios.post(`${API__URL}`, e)
+    } catch (error) {
+      console.log("error while calling deleteUser api", error)
+    }
   }
 
   const clear = () => {
@@ -76,7 +82,7 @@ const UserProfile = () => {
               onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
             />
           </Grid>
-          <Grid item><Button variant="contained" color='primary' size='large' type='submit' fullWidth>Submit</Button></Grid>
+          <Grid item><Button variant="contained" color='primary' size='large' type='submit' onClick={() => handleSubmit()} fullWidth>Submit</Button></Grid>
 
           <Grid item><Button variant="contained" color='secondary' size='small' onClick={clear} fullWidth>Clear</Button></Grid>
 

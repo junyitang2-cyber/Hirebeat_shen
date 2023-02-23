@@ -1,1 +1,13 @@
-{"compilerOptions":{"baseUrl":"."},"include":["src"]}
+{
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": [
+    "src"
+  ],
+  "cognito": {
+    "REGION": "us-west-2",
+    "USER_POOL_ID": "us-west-2_7uIxcYCEz",
+    "APP_CLIENT_ID": "61oea52b20g5d19tb8idg09v21"
+  }
+}

@@ -42,10 +42,17 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
+//** Auth
+import UserPool from '../UserPool/UserPool'
+
+import AWS from 'aws-amplify'
+import { CognitoUserPool } from 'amazon-cognito-identity-js'
+import { UserAttributeList } from 'aws-sdk/clients/inspector'
+
 
 const defaultValues = {
-  email: '',
   username: '',
+  email: '',
   password: '',
   terms: false
 }
@@ -110,6 +117,10 @@ const Register = () => {
   const { register } = useAuth()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("")
+
 
   // ** Vars
   const { skin } = settings
@@ -123,35 +134,63 @@ const Register = () => {
 
   const {
     control,
-    setError,
-    handleSubmit,
+
+    //   // setError,
+
+    //   // handleSubmit,
     formState: { errors }
   } = useForm({
-    defaultValues,
-    mode: 'onBlur',
+    //   defaultValues,
+    // mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = data => {
-    const { email, username, password } = data
-    register({ email, username, password }, err => {
-      if (err.email) {
-        setError('email', {
-          type: 'manual',
-          message: err.email
-        })
-      }
-      if (err.username) {
-        setError('username', {
-          type: 'manual',
-          message: err.username
-        })
-      }
-    })
-  }
+  // const onSubmit = data => {
+  //   const { email, username, password } = data
+  //   register({ email, username, password }, err => {
+  //     if (err.email) {
+  //       setError('email', {
+  //         type: 'manual',
+  //         message: err.email
+  //       })
+  //     }
+  //     if (err.username) {
+  //       setError('username', {
+  //         type: 'manual',
+  //         message: err.username
+  //       })
+  //     }
+  //   })
+  // }
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
+  const PoolData = {
+    UserPoolId: "us-west-2_7uIxcYCEz",
+    ClientId: "61oea52b20g5d19tb8idg09v21"
+  }
+
+  const userPool = new CognitoUserPool(PoolData)
+
   //AWS Cognito integration here
+  const onSubmit = (event) => {
+
+    event.preventDefault();
+    console.log('submitted....')
+    userPool.signUp(username, password, UserAttributeList = [{
+      email: email
+    }], [email], null, (err, data) => {
+      if (err) {
+        return "error occured"
+        console.log(err);
+      } {
+        return data;
+        console.log(data);
+      }
+    });
+
+
+  };
+
 
 
   return (
@@ -267,7 +306,7 @@ const Register = () => {
               <TypographyStyled variant='h5'>Adventure starts here 🚀</TypographyStyled>
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+            <form noValidate autoComplete='off'>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='username'
@@ -276,10 +315,10 @@ const Register = () => {
                   render={({ field: { value, onChange, onBlur } }) => (
                     <TextField
                       autoFocus
-                      value={value}
+                      value={username}
                       onBlur={onBlur}
                       label='Username'
-                      onChange={onChange}
+                      onChange={(event) => setUsername(event.target.value)}
                       placeholder='johndoe'
                       error={Boolean(errors.username)}
                     />
@@ -296,10 +335,10 @@ const Register = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <TextField
-                      value={value}
+                      value={email}
                       label='Email'
                       onBlur={onBlur}
-                      onChange={onChange}
+                      onChange={(event) => setEmail(event.target.value)}
                       error={Boolean(errors.email)}
                       placeholder='user@email.com'
                     />
@@ -317,10 +356,10 @@ const Register = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <OutlinedInput
-                      value={value}
+                      value={password}
                       label='Password'
                       onBlur={onBlur}
-                      onChange={onChange}
+                      onChange={(event) => setPassword(event.target.value)}
                       id='auth-login-v2-password'
                       error={Boolean(errors.password)}
                       type={showPassword ? 'text' : 'password'}
@@ -390,7 +429,8 @@ const Register = () => {
                   <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
                 )}
               </FormControl>
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }} onClick={() => { [] }}>
+              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}
+                onClick={onSubmit}>
                 Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -435,6 +475,7 @@ const Register = () => {
   )
 }
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
+
 Register.guestGuard = true
 
 export default Register
