@@ -47,7 +47,10 @@ import UserPool from '../UserPool/UserPool'
 
 import AWS from 'aws-amplify'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { UserAttributeList } from 'aws-sdk/clients/inspector'
+import { id } from 'date-fns/esm/locale'
+
+
+
 
 
 const defaultValues = {
@@ -117,10 +120,10 @@ const Register = () => {
   const { register } = useAuth()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [username, setUsername] = useState("")
 
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
 
   // ** Vars
   const { skin } = settings
@@ -172,24 +175,36 @@ const Register = () => {
   const userPool = new CognitoUserPool(PoolData)
 
   //AWS Cognito integration here
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
 
     event.preventDefault();
-    console.log('submitted....')
-    userPool.signUp(username, password, UserAttributeList = [{
-      email: email
-    }], [email], null, (err, data) => {
-      if (err) {
-        return "error occured"
-        console.log(err);
-      } {
-        return data;
-        console.log(data);
-      }
-    });
 
+    userPool.signUp({ username }, { password }, { email })
 
-  };
+  }
+
+  const handleUpdateUserDetails = (e) => {
+    setUser({ [e.target.name]: e.target.value })
+    console.log({ [e.target.name]: e.target.value })
+  }
+
+  // const onSubmit = async (event) => {
+  //   event.preventDefault()
+
+  //   try {
+  //     const signUpResponse = await userPool.signUp({
+  //       username,
+  //       password,
+  //       attributes: {
+  //         email: email
+  //
+  //     });
+  //     console.log(signUpResponse)
+  //   } catch (error) {
+  //     setUser
+  //   }
+
+  // }
 
 
 
@@ -306,7 +321,7 @@ const Register = () => {
               <TypographyStyled variant='h5'>Adventure starts here 🚀</TypographyStyled>
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
-            <form noValidate autoComplete='off'>
+            <form noValidate autoComplete='off' onSubmit={onSubmit}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='username'
@@ -430,7 +445,7 @@ const Register = () => {
                 )}
               </FormControl>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}
-                onClick={onSubmit}>
+              >
                 Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>

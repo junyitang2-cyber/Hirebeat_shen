@@ -47,6 +47,14 @@ const PostDetails = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    try {
+      await axios.post(`${API_URL}`, e)
+      getData()
+    } catch (error) {
+      console.log("error while calling deleteUser api", error)
+    }
+  }
 
 
 

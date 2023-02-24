@@ -22,7 +22,7 @@
         },
         "createOrder": {
           "deploymentBucketName": "amplify-test-dev-201148-deployment",
-          "s3Key": "amplify-builds/createOrder-627438316b725a434a4a-build.zip"
+          "s3Key": "amplify-builds/createOrder-4e75417548584536505a-build.zip"
         },
         "S3Triggerf1fd4717": {
           "deploymentBucketName": "amplify-test-dev-201148-deployment",
