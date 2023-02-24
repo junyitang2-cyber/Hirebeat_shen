@@ -47,7 +47,7 @@ import UserPool from '../UserPool/UserPool'
 
 import AWS from 'aws-amplify'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { id } from 'date-fns/esm/locale'
+import { Auth } from 'aws-amplify';
 
 
 
@@ -167,44 +167,66 @@ const Register = () => {
   // }
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
+
   const PoolData = {
     UserPoolId: "us-west-2_7uIxcYCEz",
     ClientId: "61oea52b20g5d19tb8idg09v21"
   }
 
-  const userPool = new CognitoUserPool(PoolData)
+  const UserPool = new CognitoUserPool(PoolData)
 
-  //AWS Cognito integration here
-  const onSubmit = async (event) => {
+  // async function signUp() {
+  //   try {
+  //     const { user } = await UserPool.signUp({
+  //       username,
+  //       password,
+  //       attributes: {
+  //         email,          // optional
+  //         // other custom attributes
+  //       },
+  //       autoSignIn: { // optional - enables auto sign in after user is confirmed
+  //         enabled: false,
+  //       }
+  //     });
+  //     console.log(user);
+  //   } catch (error) {
+  //     console.log('error signing up:', error);
+  //   }
+  // }
 
-    event.preventDefault();
 
-    userPool.signUp({ username }, { password }, { email })
 
-  }
+  // //AWS Cognito integration here
+  // const onSubmit = async (event) => {
+
+  //   event.preventDefault();
+
+  //   userPool.signUp({ username }, { password }, { email })
+
+  // }
 
   const handleUpdateUserDetails = (e) => {
     setUser({ [e.target.name]: e.target.value })
     console.log({ [e.target.name]: e.target.value })
   }
 
-  // const onSubmit = async (event) => {
-  //   event.preventDefault()
+  const onSubmit = async (event) => {
+    event.preventDefault()
 
-  //   try {
-  //     const signUpResponse = await userPool.signUp({
-  //       username,
-  //       password,
-  //       attributes: {
-  //         email: email
-  //
-  //     });
-  //     console.log(signUpResponse)
-  //   } catch (error) {
-  //     setUser
-  //   }
+    try {
+      const signUpResponse = await UserPool.signUp({
+        username,
+        password,
+        attributes: {
+          email
+        }
+      }).promise();
+      console.log(signUpResponse)
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
 
-  // }
+  }
 
 
 
