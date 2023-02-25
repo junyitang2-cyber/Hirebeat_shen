@@ -48,10 +48,8 @@ import UserPool from '../UserPool/UserPool'
 import AWS from 'aws-amplify'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
 import { Auth } from 'aws-amplify';
-
-
-
-
+import { useRouter } from 'next/router'
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 
 const defaultValues = {
   username: '',
@@ -124,9 +122,17 @@ const Register = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const [error, setError] = useState("")
+
+
+  //**verify email */
+  const [verificationCode, setVerificationCode] = useState("")
+  const [showVerification, setShowVerification] = useState(false)
+  const [open, setOpen] = useState(false)
 
   // ** Vars
   const { skin } = settings
+  const router = useRouter()
 
   const schema = yup.object().shape({
     password: yup.string().min(5).required(),
@@ -167,68 +173,46 @@ const Register = () => {
   // }
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
-
-  const PoolData = {
-    UserPoolId: "us-west-2_7uIxcYCEz",
-    ClientId: "61oea52b20g5d19tb8idg09v21"
-  }
-
-  const UserPool = new CognitoUserPool(PoolData)
-
-  // async function signUp() {
-  //   try {
-  //     const { user } = await UserPool.signUp({
-  //       username,
-  //       password,
-  //       attributes: {
-  //         email,          // optional
-  //         // other custom attributes
-  //       },
-  //       autoSignIn: { // optional - enables auto sign in after user is confirmed
-  //         enabled: false,
-  //       }
-  //     });
-  //     console.log(user);
-  //   } catch (error) {
-  //     console.log('error signing up:', error);
-  //   }
-  // }
-
-
-
-  // //AWS Cognito integration here
-  // const onSubmit = async (event) => {
-
-  //   event.preventDefault();
-
-  //   userPool.signUp({ username }, { password }, { email })
-
-  // }
-
-  const handleUpdateUserDetails = (e) => {
-    setUser({ [e.target.name]: e.target.value })
-    console.log({ [e.target.name]: e.target.value })
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault()
-
+  //**Register */
+  const handleRegister = async (e) => {
+    e.preventDefault();
     try {
-      const signUpResponse = await UserPool.signUp({
+      const { user } = await Auth.signUp({
         username,
         password,
         attributes: {
-          email
+          email,
         }
-      }).promise();
-      console.log(signUpResponse)
+      });
+      console.log(user)
+
+      // setError(null);
+      // setUsername("");
+      // setEmail("");
+      // setPassword("");
+      setShowVerification(true)
+      setOpen(true)
+
+      // setSendVerification(true)
+
+
+
     } catch (error) {
-      console.log('error signing up:', error);
+      setError(error.message)
     }
+  };
 
-  }
-
-
+  const handleVerification = async (e) => {
+    e.preventDefault();
+    try {
+      await Auth.confirmSignUp(username, verificationCode)
+      alert("Registration successful!")
+      router.push('/login')
+      setOpen(false)
+    } catch (error) {
+      setError(error.message)
+    }
+  };
 
   return (
     <Box className='content-right'>
@@ -343,7 +327,7 @@ const Register = () => {
               <TypographyStyled variant='h5'>Adventure starts here 🚀</TypographyStyled>
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={onSubmit}>
+            <form noValidate autoComplete='off' onSubmit={handleRegister}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='username'
@@ -505,12 +489,32 @@ const Register = () => {
                 </IconButton>
               </Box>
             </form>
+            {showVerification && (
+              <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Verify Email</DialogTitle>
+                <DialogContent>
+                  <form onSubmit={handleVerification}>
+                    <TextField label="Verification Code" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} margin="dense" fullWidth />
+                  </form>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  <Button onClick={handleVerification} color="primary" variant="contained">
+                    Verify
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            )}
+            {error && <p>(error)</p>}
           </BoxWrapper>
         </Box>
       </RightWrapper>
+
+
     </Box>
-  )
-}
+  );
+};
+
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 Register.guestGuard = true

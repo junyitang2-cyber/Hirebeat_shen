@@ -44,6 +44,14 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
+//** Cognito
+import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
+import UserPool from '../UserPool/UserPool'
+import { Auth } from 'aws-amplify'
+import { useRouter } from 'next/router'
+
+
+
 // ** Styled Components
 const LoginIllustrationWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(20),
@@ -107,6 +115,9 @@ const defaultValues = {
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
 
   // ** Hooks
   const auth = useAuth()
@@ -114,6 +125,8 @@ const LoginPage = () => {
   const bgColors = useBgColor()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const router = useRouter()
+
 
   // ** Vars
   const { skin } = settings
@@ -129,15 +142,32 @@ const LoginPage = () => {
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = data => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
-      setError('email', {
-        type: 'manual',
-        message: 'Email or Password is invalid'
-      })
-    })
+  // const onSubmit = data => {
+  //   const { email, password } = data
+  //   auth.login({ email, password, rememberMe }, () => {
+  //     setError('email', {
+  //       type: 'manual',
+  //       message: 'Email or Password is invalid'
+  //     })
+  //   })
+  // }
+
+  const onSubmit = async () => {
+    try {
+      const authDetails = new AuthenticationDetails({
+        Username: email,
+        Password: password,
+      });
+      await Auth.signIn(email, password);
+
+      router.push("/home")
+    } catch (error) {
+      console.log(error)
+      setError("Incorrect email or password")
+    }
   }
+
+
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
   return (
@@ -271,9 +301,9 @@ const LoginPage = () => {
                     <TextField
                       autoFocus
                       label='Email'
-                      value={value}
+                      value={email}
                       onBlur={onBlur}
-                      onChange={onChange}
+                      onChange={(e) => setEmail(e.target.value)}
                       error={Boolean(errors.email)}
                       placeholder='admin@materialize.com'
                     />
@@ -291,10 +321,10 @@ const LoginPage = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <OutlinedInput
-                      value={value}
+                      value={password}
                       onBlur={onBlur}
                       label='Password'
-                      onChange={onChange}
+                      onChange={(e) => setPassword(e.target.value)}
                       id='auth-login-v2-password'
                       error={Boolean(errors.password)}
                       type={showPassword ? 'text' : 'password'}

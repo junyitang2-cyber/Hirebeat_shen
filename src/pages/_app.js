@@ -57,12 +57,17 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 
+const clientSideEmotionCache = createEmotionCache()
+
 import { Amplify, Auth } from 'aws-amplify';
 import awsmobile from 'src/aws-exports'
+import Home from './home'
+import AppBarContent from 'src/@core/layouts/components/horizontal/app-bar-content'
+import Navigation from 'src/@core/layouts/components/horizontal/navigation'
 
 Amplify.configure(awsmobile);
 
-const clientSideEmotionCache = createEmotionCache()
+
 
 // ** Pace Loaders
 if (themeConfig.routingLoader) {
@@ -86,6 +91,7 @@ const Guard = ({ children, authGuard, guestGuard }) => {
     return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
   }
 }
+
 
 // ** Configure JSS & ClassName
 const App = props => {
@@ -114,6 +120,7 @@ const App = props => {
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
 
+
       <AuthProvider>
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
@@ -122,9 +129,12 @@ const App = props => {
                 <ThemeComponent settings={settings}>
                   <WindowWrapper>
                     <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                        {getLayout(<Component {...pageProps} />)}
-                      </AclGuard>
+
+                      {/* <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}> */}
+
+                      {getLayout(<Component {...pageProps} />)}
+
+                      {/* </AclGuard> */}
                     </Guard>
                   </WindowWrapper>
                   <ReactHotToast>
@@ -136,6 +146,7 @@ const App = props => {
           </SettingsConsumer>
         </SettingsProvider>
       </AuthProvider>
+
     </CacheProvider>
 
   )
