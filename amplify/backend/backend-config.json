@@ -1,41 +1,6 @@
 {
-  "api": {
-    "test": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "test9b5ec528"
-        }
-      ],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "apiKeyConfig": {
-                "apiKeyExpirationDate": "2023-04-24T06:01:15.267Z",
-                "apiKeyExpirationDays": 60,
-                "description": "processOrder"
-              },
-              "authenticationType": "API_KEY"
-            }
-          ],
-          "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authtest9b5ec528"
-            }
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "auth": {
-    "test9b5ec528": {
+    "hirebeat8d593e58": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -51,97 +16,15 @@
           "EMAIL"
         ],
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    }
-  },
-  "function": {
-    "S3Triggerf1fd4717": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "createOrder": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "processPayment": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_S3Triggerf1fd4717_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerf1fd4717"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Triggerf1fd4717_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerf1fd4717"
-        }
-      ]
-    },
-    "AMPLIFY_function_createOrder_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "createOrder"
-        }
-      ]
-    },
-    "AMPLIFY_function_createOrder_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "createOrder"
-        }
-      ]
-    },
-    "AMPLIFY_function_processPayment_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "processPayment"
-        }
-      ]
-    },
-    "AMPLIFY_function_processPayment_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "processPayment"
-        }
-      ]
-    }
-  },
-  "storage": {
-    "userImages": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "S3Triggerf1fd4717"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
     }
   }
 }

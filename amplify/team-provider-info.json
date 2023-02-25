@@ -1,39 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-test-dev-201148-authRole",
-      "UnauthRoleArn": "arn:aws:iam::768570236126:role/amplify-test-dev-201148-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::768570236126:role/amplify-test-dev-201148-authRole",
+      "AuthRoleName": "amplify-hirebeat-dev-235310-authRole",
+      "UnauthRoleArn": "arn:aws:iam::768570236126:role/amplify-hirebeat-dev-235310-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::768570236126:role/amplify-hirebeat-dev-235310-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-test-dev-201148-deployment",
-      "UnauthRoleName": "amplify-test-dev-201148-unauthRole",
-      "StackName": "amplify-test-dev-201148",
-      "StackId": "arn:aws:cloudformation:us-west-2:768570236126:stack/amplify-test-dev-201148/32581970-b330-11ed-8653-0ac2547d7f4f",
-      "AmplifyAppId": "dfd7pjxzsrf1i"
+      "DeploymentBucketName": "amplify-hirebeat-dev-235310-deployment",
+      "UnauthRoleName": "amplify-hirebeat-dev-235310-unauthRole",
+      "StackName": "amplify-hirebeat-dev-235310",
+      "StackId": "arn:aws:cloudformation:us-west-2:768570236126:stack/amplify-hirebeat-dev-235310/738041e0-b4e1-11ed-b1d0-062051917877",
+      "AmplifyAppId": "d3rnu6tzpwvgb0"
     },
     "categories": {
       "auth": {
-        "test9b5ec528": {}
-      },
-      "function": {
-        "processPayment": {
-          "deploymentBucketName": "amplify-test-dev-201148-deployment",
-          "s3Key": "amplify-builds/processPayment-66514d594b6f7935612f-build.zip"
-        },
-        "createOrder": {
-          "deploymentBucketName": "amplify-test-dev-201148-deployment",
-          "s3Key": "amplify-builds/createOrder-4e75417548584536505a-build.zip"
-        },
-        "S3Triggerf1fd4717": {
-          "deploymentBucketName": "amplify-test-dev-201148-deployment",
-          "s3Key": "amplify-builds/S3Triggerf1fd4717-62474f4363715331696e-build.zip"
-        }
-      },
-      "storage": {
-        "userImages": {}
-      },
-      "api": {
-        "test": {}
+        "hirebeat8d593e58": {}
       }
     }
   }
