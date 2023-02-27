@@ -17,6 +17,10 @@ const navigation = () => [
       {
         title: 'UserProfile',
         path: 'third-page/user'
+      },
+      {
+        title: 'tab',
+        path: 'third-page/tab'
       }
     ]
   },

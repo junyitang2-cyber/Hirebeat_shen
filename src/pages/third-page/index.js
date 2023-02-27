@@ -8,18 +8,24 @@ import Header from '../component/Header'
 import Left from '../component/Left'
 import Form from '../component/Form'
 import CandLeft from '../component/CandLeft'
-import Candidates from '../component/Candidates'
+import Candidates from './Candidates'
+import { Hidden } from '@mui/material'
+import TalentPool from './tabs/TalentPool'
 
 const thirdPage = () => {
   return (
     <Grid container spacing={6}>
       <Header />
-      <Grid item xs={3}>
-        <CandLeft />
+      <Hidden mdDown>
+        <Grid item xs={3}>
+          <CandLeft />
+        </Grid>
+      </Hidden>
+      <Grid item xs={12} md={9}>
+        <TalentPool />
+
       </Grid>
-      <Grid item xs={9} >
-        <Candidates />
-      </Grid>
+
 
     </Grid>
   )

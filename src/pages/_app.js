@@ -130,11 +130,11 @@ const App = props => {
                   <WindowWrapper>
                     <Guard authGuard={authGuard} guestGuard={guestGuard}>
 
-                      {/* <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}> */}
+                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
 
-                      {getLayout(<Component {...pageProps} />)}
+                        {getLayout(<Component {...pageProps} />)}
 
-                      {/* </AclGuard> */}
+                      </AclGuard>
                     </Guard>
                   </WindowWrapper>
                   <ReactHotToast>

@@ -9,7 +9,6 @@ import axios from 'axios'
 
 // ** Config
 import authConfig from 'src/configs/auth'
-import { Auth } from 'aws-amplify'
 
 // ** Defaults
 const defaultProvider = {
@@ -36,7 +35,7 @@ const AuthProvider = ({ children }) => {
       if (storedToken) {
         setLoading(true)
         await axios
-          .get(Auth.loginEndpoint, {
+          .get(authConfig.meEndpoint, {
             headers: {
               Authorization: storedToken
             }

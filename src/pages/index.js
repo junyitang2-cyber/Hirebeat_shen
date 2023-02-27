@@ -10,10 +10,9 @@ import Spinner from 'src/@core/components/spinner'
 // ** Hook Imports
 import { useAuth } from 'src/hooks/useAuth'
 
-
 export const getHomeRoute = role => {
-
-  return '/home'
+  if (role === 'client') return '/acl'
+  else return '/home'
 }
 
 const Home = () => {
@@ -26,8 +25,8 @@ const Home = () => {
       return
     }
 
-    if (auth.user) {
-      const homeRoute = getHomeRoute()
+    if (auth.user && auth.user.role) {
+      const homeRoute = getHomeRoute(auth.user.role)
 
       // Redirect user to Home URL
       router.replace(homeRoute)

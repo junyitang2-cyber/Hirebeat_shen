@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { useRouter } from 'next/router';
+import UploadImage from './UploadImage';
 
 
 const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
@@ -200,6 +201,7 @@ const Form = () => {
 
         </Grid>
         {error && <h3>{error}</h3>}
+        <UploadImage />
         <Button onClick={() => handleAdd()}>Submit</Button>
       </Grid>
     </Card>

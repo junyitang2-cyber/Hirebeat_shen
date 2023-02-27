@@ -1,0 +1,14 @@
+{
+  "resourceName": "s36c8cfda2",
+  "policyUUID": "6c8cfda2",
+  "bucketName": "hire",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
