@@ -1,8 +1,8 @@
 import React from 'react'
+import { useState } from 'react';
 
-import { Button, Divider, Fab, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, TextField } from '@mui/material'
-import CardContent from '@mui/material/CardContent'
-import Card from '@mui/material/Card'
+import { Button, Card, CardContent, Divider, Fab, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, TextField } from '@mui/material'
+
 
 // ICON
 import Icon from 'src/@core/components/icon'
@@ -10,9 +10,11 @@ import EmailIcon from '@mui/icons-material/Email';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import { Link, Route, Router, Routes } from 'react-router-dom'
+import Form from './Form';
 
-const Left = () => {
+const TalentPoolLeft = () => {
+  const [active, setActive] = useState("")
+
   return (
     <div>
       <Card sx={{ height: 600 }}>
@@ -33,7 +35,7 @@ const Left = () => {
 
         <List sx={{ p: 3 }}>
 
-          <ListItemButton>
+          <ListItemButton onClick={() => setActive("NewOrder")}>
             <ListItemIcon>
               <AddToPhotosIcon />
             </ListItemIcon>
@@ -68,9 +70,10 @@ const Left = () => {
         </List>
 
         <Divider />
-      </Card >
-    </div >
+
+      </Card>
+    </div>
   )
 }
 
-export default Left
+export default TalentPoolLeft

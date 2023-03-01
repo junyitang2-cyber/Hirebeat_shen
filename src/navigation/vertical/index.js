@@ -4,6 +4,12 @@ const navigation = () => {
       title: 'Home',
       path: '/home',
       icon: 'mdi:home-outline',
+      children: [
+        {
+          title: "Candidates",
+          path: '/home/candidates'
+        }
+      ]
     },
     {
       title: 'Second Page',
@@ -21,12 +27,12 @@ const navigation = () => {
         },
         {
           title: 'tab',
-          path: 'third-page/tabs'
+          path: '/tabs'
         }
       ]
     },
     {
-      path: '/component/TalentPool',
+      path: '/acl-page',
       action: 'read',
       subject: 'acl-page',
       title: 'Access Control',

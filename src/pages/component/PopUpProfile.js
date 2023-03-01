@@ -31,6 +31,7 @@ const PopUpProfile = (props) => {
       onClose={handleClose}
       fullWidth={fullWidth}
       maxWidth={maxWidth}
+      PaperProps={{ sx: { width: "80%", height: "80%" } }}
     >
       <DialogTitle>
         <Typography>{title}</Typography>

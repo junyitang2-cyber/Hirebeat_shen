@@ -4,8 +4,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import TalentPool from './TalentPool';
-import Candidates from '../Candidates';
 
 
 function TabPanel(props) {
@@ -71,13 +69,13 @@ export default function Talent() {
         <Tab label="Item Seven" {...a11yProps(6)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <TalentPool />
+        one
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Candidates />
+        two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TalentPool />
+        three
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four

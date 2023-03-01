@@ -1,4 +1,4 @@
-import { Card, Grid, IconButton, TextField, Typography, MenuItem, Select, InputLabel, Button, NativeSelect } from '@mui/material'
+import { Card, Grid, IconButton, TextField, Typography, MenuItem, Select, InputLabel, Button, NativeSelect, Checkbox, ListItemText, OutlinedInput } from '@mui/material'
 import React from 'react'
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,12 +12,67 @@ import UploadImage from './UploadImage';
 const API_URL = 'https://kasek7o0kk.execute-api.us-west-2.amazonaws.com/test';
 
 
-const Form = () => {
+const Form = ({ close }) => {
   const [user, setUser] = useState("")
   const [error, setError] = useState('')
+  const [requiredSkills, setRequiredSkills] = useState([])
+  const [preferredSkills, setPreferredSkills] = useState([])
+  const [Industry, setIndustry] = useState([])
+  const [education, setEducation] = useState([])
   const id = new Date().getTime();
   const { currentTitle, locationPreference, yearsOfExperience, seniorityLevel, requiredSkillSets, industry } = user;
   const router = useRouter()
+
+  const requiredNames = [
+    "Communication",
+    "Teamwork",
+    "Problem solving",
+    "Initiative and enterprise",
+    "Planning and Organising",
+    "Self-management",
+    "Learning",
+    "Technology",
+  ];
+
+  const preferredNames = [
+    "Cloud Computing",
+    "Machine Learning",
+    "Figma",
+    "AWS",
+    "Data Analysis",
+    "Web Development",
+    "LUser experience (UX)",
+    "Cybersecurity analytics",
+  ];
+
+  const IndustryNames = [
+    "IT",
+    "Advertising and marketing",
+    "Health care",
+    "Business and finance",
+    "Retail",
+    "Food and hospitality ",
+    "Education",
+    "Arts and entertainment",
+  ];
+
+  const educationNames = [
+    "High School Degree",
+    "Associate's Degree",
+    "Bachelor's Degree",
+    "Master's Degree",
+    "Doctoral Degree",
+  ];
+
+  const handleClicked = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setRequiredSkills(typeof value === 'string' ? value.split(',') : value,);
+    setPreferredSkills(typeof value === 'string' ? value.split(',') : value,);
+    setIndustry(typeof value === 'string' ? value.split(',') : value,);
+    setEducation(typeof value === 'string' ? value.split(',') : value,);
+  };
 
   const handleChange = (e) => {
     setUser({ ...user, id: id, [e.target.name]: e.target.value })
@@ -29,11 +84,12 @@ const Form = () => {
   }
 
   const handleAdd = async () => {
-    if (!currentTitle || !locationPreference || !yearsOfExperience || !seniorityLevel || !requiredSkillSets || !industry) {
+    if (!currentTitle || !locationPreference || !yearsOfExperience) {
       setError("please input all input Filed!")
     } else {
       await addUser(user)
-      router.push('/home')
+
+      close(false)
       setError("")
     }
   }
@@ -41,9 +97,9 @@ const Form = () => {
 
 
   return (
-    <Card sx={{ height: 1000 }}>
-      <Grid xs={12}>
-        <IconButton><CloseIcon /></IconButton>
+    <Card sx={{ height: 1000, ml: 4 }}>
+      <Grid xs={8}>
+        <IconButton onClick={() => close(false)}><CloseIcon /></IconButton>
       </Grid>
 
       <Grid container xs={12} sx={{ height: 20, mt: 5, alignItems: 'center', justifyContent: 'center' }}>
@@ -91,6 +147,7 @@ const Form = () => {
               <option value={"Less than 1 year"}>Less than 1 year</option>
               <option value={"1-3 years"}>1-3 years</option>
               <option value={"3-5 years"}>3-5 years</option>
+              <option value={"Over 5 years"}>over 5 years</option>
             </NativeSelect>
           </Grid>
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
@@ -120,73 +177,83 @@ const Form = () => {
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Required Skill Sets*
             </InputLabel>
-            <NativeSelect
-              defaultValue={""}
+            <Select
+              multiple
               fullWidth
-              value={requiredSkillSets}
-              name="requiredSkillSets"
-              onChange={(e) => handleChange(e)}
+              value={requiredSkills}
+              onChange={handleClicked}
+              renderValue={(selected) => selected.join(', ')}
             >
-              <option value={""}>Select...</option>
-              <option value={"Leadership"}>Leadership</option>
-              <option value={"Communication"}>Communication</option>
-
-            </NativeSelect>
+              {requiredNames.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={requiredSkills.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
-              Perferred Skilled Sets
+              Preferred Skilled Sets
             </InputLabel>
-            <NativeSelect
+            <Select
               defaultValue={""}
               fullWidth
-              onChange={(e) => handleChange(e)}
-              inputProps={{
-                name: 'perferredSkilledSets',
-                id: 'uncontrolled-native'
-              }}
+              multiple
+              value={preferredSkills}
+              onChange={(e) => handleClick(e)}
+              renderValue={(selected) => selected.join(', ')}
             >
-              <option value={""}>Select...</option>
-              <option >Entry</option>
-              <option >Associate</option>
-              <option >Senior</option>
-            </NativeSelect>
+              {preferredNames.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={preferredSkills.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
 
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Industry*
             </InputLabel>
-            <NativeSelect
+            <Select
               defaultValue={""}
               fullWidth
-              value={industry}
-              name="industry"
-              onChange={(e) => handleChange(e)}
+              multiple
+              required
+              value={Industry}
+              onChange={(e) => handleIndustry(e)}
+              renderValue={(selected) => selected.join(', ')}
             >
-              <option value={""}>Select...</option>
-              <option value={"Less than 1 year"}>Less than 1 year</option>
-              <option value={"1-3 years"}>1-3 years</option>
-              <option value={"3-5 years"}>3-5 years</option>
-            </NativeSelect>
+              {IndustryNames.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={Industry.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
           <Grid item xs={10} md={5} sx={{ m: 4, ml: 10 }}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Education Level
             </InputLabel>
-            <NativeSelect
+            <Select
               defaultValue={""}
               fullWidth
-              inputProps={{
-                name: 'educationLevel',
-                id: 'uncontrolled-native'
-              }}
+              multiple
+              required
+              value={education}
+              onChange={(e) => handleEducation(e)}
+              renderValue={(selected) => selected.join(', ')}
             >
-              <option value={""}>Select...</option>
-              <option >Entry</option>
-              <option >Associate</option>
-              <option >Senior</option>
-            </NativeSelect>
+              {educationNames.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={education.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
 
           <Grid item xs={12} sx={{ m: 4, ml: 10 }}>
@@ -200,8 +267,7 @@ const Form = () => {
 
 
         </Grid>
-        {error && <h3>{error}</h3>}
-        <UploadImage />
+        {error && <h4>{error}</h4>}
         <Button onClick={() => handleAdd()}>Submit</Button>
       </Grid>
     </Card>

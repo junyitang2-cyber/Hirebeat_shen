@@ -12,9 +12,7 @@ import { useRouter } from 'next/router';
 const Header = () => {
   const router = useRouter()
 
-  function clickTalent() {
-    router.push('/TalentPool')
-  }
+
 
   return (
     <Grid item xs={12} container>
@@ -28,13 +26,7 @@ const Header = () => {
           <AddIcon />
         </Fab>
       </Grid>
-      <Grid container xs={12}>
-        <ButtonGroup variant="text" aria-label="text button group">
-          <Button onClick={() => clickTalent()}>Talent Pool</Button>
-          <Button onClick={() => { }}>Candidates</Button>
-          <Button onClick={() => { }}>Details</Button>
-        </ButtonGroup>
-      </Grid>
+
     </Grid>
 
   )

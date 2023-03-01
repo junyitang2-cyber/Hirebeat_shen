@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Header from '../component/Header'
-import Left from '../component/Left'
+import Left from '../component/TalentPoolLeft'
 import Form from '../component/Form'
 import CandLeft from '../component/CandLeft'
-import Candidates from './Candidates'
+
 import { Hidden } from '@mui/material'
 import TalentPool from './tabs/TalentPool'
 
