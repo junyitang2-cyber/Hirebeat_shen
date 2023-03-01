@@ -142,30 +142,30 @@ const LoginPage = () => {
     resolver: yupResolver(schema)
   })
 
-  // const onSubmit = data => {
-  //   const { email, password } = data
-  //   auth.login({ email, password, rememberMe }, () => {
-  //     setError('email', {
-  //       type: 'manual',
-  //       message: 'Email or Password is invalid'
-  //     })
-  //   })
-  // }
-
-  const onSubmit = async () => {
-    try {
-      const authDetails = new AuthenticationDetails({
-        Username: email,
-        Password: password,
-      });
-      const user = Auth.signIn(email, password);
-      console.log(user)
-      router.push('/home')
-    } catch (error) {
-      console.log(error)
-      setError("Incorrect email or password")
-    }
+  const onSubmit = data => {
+    const { email, password } = data
+    auth.login({ email, password, rememberMe }, () => {
+      setError('email', {
+        type: 'manual',
+        message: 'Email or Password is invalid'
+      })
+    })
   }
+
+  // const onSubmit = async () => {
+  //   try {
+  //     const authDetails = new AuthenticationDetails({
+  //       Username: email,
+  //       Password: password,
+  //     });
+  //     const user = Auth.signIn(email, password);
+  //     console.log(user)
+  //     router.push('/home')
+  //   } catch (error) {
+  //     console.log(error)
+  //     setError("Incorrect email or password")
+  //   }
+  // }
 
 
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
